@@ -1,10 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
 
-var roopNum = 100
 
 func main() {
+	var roopNum int
+	roopNum, _ = strconv.Atoi(os.Args[1])
+
 	for i := 1; i <= roopNum; i++ {
 		if i%15 == 0 {
 			fmt.Println("FizzBuzz")
