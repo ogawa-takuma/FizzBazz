@@ -2,49 +2,37 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
-	"bufio"
+	"encoding/json"
+	"io/ioutil"
 )
 
 /* FizzBuzzの要素を構造体にまとめる */
 type roopElement struct {
-	roopNum int
-	str3 string
-	str5 string
-}
-
-func SrtStdin() (stringInput string) {
-
-	scanner := bufio.NewScanner(os.Stdin)
-
-	scanner.Scan()
-	stringInput = scanner.Text()
-
-	return
+	RoopNum int `json:"RoopNum"`
+	Str3 string `json:"Str3"`
+	Str5 string `json:"Str5"`
 }
 
 func main() {
 
-	roopE := roopElement{str3:"Fizz", str5:"Buzz"}
-	
-	var err error
+	bytes, err := ioutil.ReadFile("roopElement.json")
 
-	fmt.Printf("ループ回数を整数で入力してください：")
-	roopE.roopNum, err = strconv.Atoi(SrtStdin())
-
-	if err != nil{
-		fmt.Println("数値を入力してください")
-		os.Exit(0)
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	for i := 1; i <= roopE.roopNum; i++ {
+	roopE := new(roopElement)
+	if err := json.Unmarshal(bytes, &roopE); err != nil {
+		fmt.Println(err)
+	}
+
+	for i := 1; i <= roopE.RoopNum; i++ {
 		if i%15 == 0 {
-			fmt.Println(roopE.str3, roopE.str5)
+			fmt.Println(roopE.Str3, roopE.Str5)
 		} else if i%3 == 0 {
-			fmt.Println(roopE.str3)
+			fmt.Println(roopE.Str3)
 		} else if i%5 == 0 {
-			fmt.Println(roopE.str5)
+			fmt.Println(roopE.Str5)
 		} else {
 			fmt.Printf("%d\n", i)
 		}
