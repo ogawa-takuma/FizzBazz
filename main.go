@@ -4,15 +4,26 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"bufio"
 )
 
+func SrtStdin() (stringInput string) {
+
+	scanner := bufio.NewScanner(os.Stdin)
+
+	scanner.Scan()
+	stringInput = scanner.Text()
+
+	return
+}
 
 func main() {
-	
-	roopNum, err := strconv.Atoi(os.Args[1])
+
+	fmt.Printf("ループ回数を整数で入力してください：")
+	roopNum, err := strconv.Atoi(SrtStdin())
 
 	if err != nil{
-		fmt.Println("第一引数は数値を入力してください")
+		fmt.Println("数値を入力してください")
 		os.Exit(0)
 	}
 
